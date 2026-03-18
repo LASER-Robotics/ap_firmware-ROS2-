@@ -3,7 +3,8 @@
     speedup: 1
     instance: 0
     synthetic_clock: true
-    model: quad
+    # model: quad
+    model: gazebo-iris
     slave: 0
     sim_address: 127.0.0.1
     defaults: copter.parm

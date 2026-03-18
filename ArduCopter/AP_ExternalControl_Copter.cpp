@@ -6,6 +6,7 @@
 #include "AP_ExternalControl_Copter.h"
 #if AP_EXTERNAL_CONTROL_ENABLED
 
+#include <iostream>
 #include "Copter.h"
 
 /*
@@ -18,12 +19,14 @@ bool AP_ExternalControl_Copter::set_attitude_target(Quaternion attitude_quat, Ve
     }
 
     // check if the message's thrust field should be interpreted as a climb rate or as thrust
-    const bool use_thrust = copter.mode_guided.set_attitude_target_provides_thrust();
+    /* const bool use_thrust = copter.mode_guided.set_attitude_target_provides_thrust(); */
+    const bool use_thrust = true;
 
     float climb_rate_or_thrust;
     if (use_thrust) {
         // interpret thrust as thrust
-        climb_rate_or_thrust = constrain_float(thrust, -1.0f, 1.0f);
+        /* climb_rate_or_thrust = constrain_float(thrust, -1.0f, 1.0f); */
+        climb_rate_or_thrust = thrust;
     } else {
         // convert thrust to climb rate
         thrust = constrain_float(thrust, 0.0f, 1.0f);
@@ -37,6 +40,8 @@ bool AP_ExternalControl_Copter::set_attitude_target(Quaternion attitude_quat, Ve
             climb_rate_or_thrust = (0.5f - thrust) * 2.0f * -copter.wp_nav->get_default_speed_down_ms();
         }
     }
+
+    attitude_quat.zero();
 
     copter.mode_guided.set_angle(attitude_quat, ang_vel_body,
                                  climb_rate_or_thrust, use_thrust);
