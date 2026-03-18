@@ -41,7 +41,8 @@ set(WAF_ENABLE_PPP $<$<BOOL:${ARDUPILOT_ENABLE_PPP}>:"--enable-PPP">)
 
 add_custom_target(ardupilot_configure ALL
   ${WAF_COMMAND} configure --board sitl
-    ${WAF_CONFIG}
+    # ${WAF_CONFIG}
+    --debug
     ${WAF_DISABLE_NETWORKING}
     ${WAF_DISABLE_SCRIPTING}
     ${WAF_DISABLE_WATCHDOG}

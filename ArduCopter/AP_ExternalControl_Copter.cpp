@@ -25,7 +25,7 @@ bool AP_ExternalControl_Copter::set_attitude_target(Quaternion attitude_quat, Ve
     float climb_rate_or_thrust;
     if (use_thrust) {
         // interpret thrust as thrust
-        /* climb_rate_or_thrust = constrain_float(thrust, -1.0f, 1.0f); */
+        climb_rate_or_thrust = constrain_float(thrust, -1.0f, 1.0f);
         climb_rate_or_thrust = thrust;
     } else {
         // convert thrust to climb rate
