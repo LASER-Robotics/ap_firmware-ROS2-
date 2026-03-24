@@ -6,6 +6,8 @@
 #include <AP_AHRS/AP_AHRS.h>
 #include <AP_Vehicle/AP_Vehicle_Type.h>
 
+#include <iostream>
+
 #define AP_MOTORS_BATT_VOLT_FILT_HZ 0.5 // battery voltage filtered at 0.5hz
 
 #if APM_BUILD_TYPE(APM_BUILD_UNKNOWN)
@@ -123,7 +125,9 @@ float Thrust_Linearization::apply_thrust_curve_and_volt_scaling(float thrust) co
     float thrust_curve_expo = constrain_float(curve_expo, -1.0, 1.0);
     if (is_zero(thrust_curve_expo)) {
         // zero expo means linear, avoid floating point exception for small values
-        return lift_max * thrust * battery_scale;
+      std::cout << thrust << std::endl;
+        return thrust;
+        /* return lift_max * thrust * battery_scale; */
     }
     float throttle_ratio = ((thrust_curve_expo - 1.0) + safe_sqrt((1.0 - thrust_curve_expo) * (1.0 - thrust_curve_expo) + 4.0 * thrust_curve_expo * lift_max * thrust)) / (2.0 * thrust_curve_expo);
     return constrain_float(throttle_ratio * battery_scale, 0.0, 1.0);
@@ -141,7 +145,8 @@ float Thrust_Linearization::remove_thrust_curve_and_volt_scaling(float throttle)
     float thrust_curve_expo = constrain_float(curve_expo, -1.0, 1.0);
     if (is_zero(thrust_curve_expo)) {
         // zero expo means linear, avoid floating point exception for small values
-        return  throttle / (lift_max * battery_scale);
+        return  throttle;
+        /* return  throttle / (lift_max * battery_scale); */
     }
     float thrust = ((throttle / battery_scale) * (2.0 * thrust_curve_expo)) - (thrust_curve_expo - 1.0);
     thrust = (thrust * thrust) - ((1.0 - thrust_curve_expo) * (1.0 - thrust_curve_expo));
