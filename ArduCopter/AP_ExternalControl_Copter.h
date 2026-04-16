@@ -13,7 +13,7 @@ public:
     /*
         sets attitude target
     */
-    bool set_attitude_target(Quaternion attitude_quat, Vector3f ang_vel_body, float thrust) override WARN_IF_UNUSED;
+    bool set_attitude_target(Quaternion attitude_quat, Vector3f ang_vel_body, float thrust, bool use_raw_ang_reference) override WARN_IF_UNUSED;
 
     /*
       Set linear velocity and yaw rate. Pass NaN for yaw_rate_rads to not control yaw.

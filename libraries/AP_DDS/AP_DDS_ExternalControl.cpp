@@ -82,7 +82,7 @@ bool AP_DDS_External_Control::handle_attitude_control(ardupilot_msgs_msg_Attitud
         return false; // TODO: Needs better handling
     }
 
-    return external_control->set_attitude_target(attitude_quat, ang_vel_body, cmd_att.thrust);
+    return external_control->set_attitude_target(attitude_quat, ang_vel_body, cmd_att.thrust, cmd_att.use_raw_ang_reference);
 }
 
 bool AP_DDS_External_Control::handle_velocity_control(geometry_msgs_msg_TwistStamped& cmd_vel)

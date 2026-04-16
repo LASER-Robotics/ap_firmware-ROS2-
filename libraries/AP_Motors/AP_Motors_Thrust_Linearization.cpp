@@ -6,8 +6,6 @@
 #include <AP_AHRS/AP_AHRS.h>
 #include <AP_Vehicle/AP_Vehicle_Type.h>
 
-#include <iostream>
-
 #define AP_MOTORS_BATT_VOLT_FILT_HZ 0.5 // battery voltage filtered at 0.5hz
 
 #if APM_BUILD_TYPE(APM_BUILD_UNKNOWN)
@@ -125,9 +123,7 @@ float Thrust_Linearization::apply_thrust_curve_and_volt_scaling(float thrust) co
     float thrust_curve_expo = constrain_float(curve_expo, -1.0, 1.0);
     if (is_zero(thrust_curve_expo)) {
         // zero expo means linear, avoid floating point exception for small values
-      std::cout << thrust << std::endl;
-        return thrust;
-        /* return lift_max * thrust * battery_scale; */
+        return lift_max * thrust * battery_scale;
     }
     float throttle_ratio = ((thrust_curve_expo - 1.0) + safe_sqrt((1.0 - thrust_curve_expo) * (1.0 - thrust_curve_expo) + 4.0 * thrust_curve_expo * lift_max * thrust)) / (2.0 * thrust_curve_expo);
     return constrain_float(throttle_ratio * battery_scale, 0.0, 1.0);
@@ -197,12 +193,12 @@ float Thrust_Linearization::get_compensation_gain() const
 
     float ret = 1.0 / get_lift_max();
 
-#if AP_MOTORS_DENSITY_COMP == 1
-    // air density ratio is increasing in density / decreasing in altitude
-    const float air_density_ratio = AP::ahrs().get_air_density_ratio();
-    if (air_density_ratio > 0.3 && air_density_ratio < 1.5) {
-        ret *= 1.0 / constrain_float(air_density_ratio, 0.5, 1.25);
-    }
-#endif
+/* #if AP_MOTORS_DENSITY_COMP == 1 */
+/*     // air density ratio is increasing in density / decreasing in altitude */
+/*     const float air_density_ratio = AP::ahrs().get_air_density_ratio(); */
+/*     if (air_density_ratio > 0.3 && air_density_ratio < 1.5) { */
+/*         ret *= 1.0 / constrain_float(air_density_ratio, 0.5, 1.25); */
+/*     } */
+/* #endif */
     return ret;
 }

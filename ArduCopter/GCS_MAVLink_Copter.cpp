@@ -1024,7 +1024,7 @@ void GCS_MAVLINK_Copter::handle_message_set_attitude_target(const mavlink_messag
     }
 
     copter.mode_guided.set_angle(attitude_quat, ang_vel_body,
-            climb_rate_ms_or_thrust, use_thrust);
+            climb_rate_ms_or_thrust, use_thrust, false);
 }
 
 void GCS_MAVLINK_Copter::handle_message_set_position_target_local_ned(const mavlink_message_t &msg)

@@ -12,3 +12,4 @@ uint8 IGNORE_ATTITUDE = 128	# orientation field
 geometry_msgs/Quaternion orientation
 geometry_msgs/Vector3 body_rate
 float32 thrust
+bool use_raw_ang_reference

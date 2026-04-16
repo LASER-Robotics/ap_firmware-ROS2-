@@ -35,6 +35,8 @@ module ardupilot_msgs {
       geometry_msgs::msg::Vector3 body_rate;
 
       float thrust;
+
+      boolean use_raw_ang_reference;
     };
   };
 };

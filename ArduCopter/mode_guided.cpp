@@ -19,6 +19,7 @@ struct {
     float climb_rate_ms;    // climb rate in ms.  Used if use_thrust is false
     float thrust_norm;      // thrust from -1 to 1.  Used if use_thrust is true
     bool use_thrust;
+    bool use_raw_ang_reference;
 } static guided_angle_state;
 
 struct Guided_Limit {
@@ -651,7 +652,7 @@ bool ModeGuided::use_wpnav_for_position_control() const
 // climb_rate_ms_or_thrust: represents either the climb_rate (m/s) or thrust scaled from [0, 1], unitless
 // use_thrust: IF true: climb_rate_ms_or_thrust represents thrust
 //             IF false: climb_rate_ms_or_thrust represents climb_rate (m/s)
-void ModeGuided::set_angle(const Quaternion &attitude_quat, const Vector3f &ang_vel_body, float climb_rate_ms_or_thrust, bool use_thrust)
+void ModeGuided::set_angle(const Quaternion &attitude_quat, const Vector3f &ang_vel_body, float climb_rate_ms_or_thrust, bool use_thrust, bool use_raw_ang_reference)
 {
     // check we are in velocity control mode
     if (guided_mode != SubMode::Angle) {
@@ -678,6 +679,8 @@ void ModeGuided::set_angle(const Quaternion &attitude_quat, const Vector3f &ang_
     // convert quaternion to euler angles
     float roll_rad, pitch_rad, yaw_rad;
     attitude_quat.to_euler(roll_rad, pitch_rad, yaw_rad);
+
+    guided_angle_state.use_raw_ang_reference = use_raw_ang_reference;
 
 #if HAL_LOGGING_ENABLED
     // log target
@@ -994,7 +997,11 @@ void ModeGuided::angle_control_run()
 
     // call attitude controller
     if (guided_angle_state.attitude_quat.is_zero()) {
-        attitude_control->input_rate_bf_roll_pitch_yaw_rads(guided_angle_state.ang_vel_body.x, guided_angle_state.ang_vel_body.y, guided_angle_state.ang_vel_body.z);
+        if(guided_angle_state.use_raw_ang_reference) {
+          attitude_control->input_rate_bf_roll_pitch_yaw_no_shaping_rads(guided_angle_state.ang_vel_body.x, guided_angle_state.ang_vel_body.y, guided_angle_state.ang_vel_body.z);
+        } else {
+          attitude_control->input_rate_bf_roll_pitch_yaw_rads(guided_angle_state.ang_vel_body.x, guided_angle_state.ang_vel_body.y, guided_angle_state.ang_vel_body.z);
+        }
     } else {
         attitude_control->input_quaternion(guided_angle_state.attitude_quat, guided_angle_state.ang_vel_body);
     }

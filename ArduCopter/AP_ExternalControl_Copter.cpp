@@ -6,13 +6,9 @@
 #include "AP_ExternalControl_Copter.h"
 #if AP_EXTERNAL_CONTROL_ENABLED
 
-#include <iostream>
 #include "Copter.h"
 
-/*
-  sets attitude commands
-*/
-bool AP_ExternalControl_Copter::set_attitude_target(Quaternion attitude_quat, Vector3f ang_vel_body, float thrust)
+bool AP_ExternalControl_Copter::set_attitude_target(Quaternion attitude_quat, Vector3f ang_vel_body, float thrust, bool use_raw_ang_reference)
 {
     if (!ready_for_external_control()) {
         return false;
@@ -41,10 +37,8 @@ bool AP_ExternalControl_Copter::set_attitude_target(Quaternion attitude_quat, Ve
         }
     }
 
-    attitude_quat.zero();
-
     copter.mode_guided.set_angle(attitude_quat, ang_vel_body,
-                                 climb_rate_or_thrust, use_thrust);
+                                 climb_rate_or_thrust, use_thrust, use_raw_ang_reference);
 
     return true;
 }
