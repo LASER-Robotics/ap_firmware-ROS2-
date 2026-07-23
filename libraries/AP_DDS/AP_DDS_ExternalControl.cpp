@@ -25,9 +25,9 @@ bool AP_DDS_External_Control::handle_global_position_control(ardupilot_msgs_msg_
         }
 
         constexpr uint32_t MASK_POS_IGNORE =
-            GlobalPosition::IGNORE_LATITUDE |
-            GlobalPosition::IGNORE_LONGITUDE |
-            GlobalPosition::IGNORE_ALTITUDE;
+            IGNORE_LATITUDE |
+            IGNORE_LONGITUDE |
+            IGNORE_ALTITUDE;
 
         if (!(cmd_pos.type_mask & MASK_POS_IGNORE)) {
             Location loc(cmd_pos.latitude * 1E7, cmd_pos.longitude * 1E7, alt_cm, alt_frame);
@@ -51,11 +51,11 @@ bool AP_DDS_External_Control::handle_attitude_control(ardupilot_msgs_msg_Attitud
         return false;
     }
 
-    const bool roll_rate_ignore   = cmd_att.type_mask & AttitudeTarget::IGNORE_ROLL_RATE;
-    const bool pitch_rate_ignore  = cmd_att.type_mask & AttitudeTarget::IGNORE_PITCH_RATE;
-    const bool yaw_rate_ignore    = cmd_att.type_mask & AttitudeTarget::IGNORE_YAW_RATE;
-    const bool throttle_ignore    = cmd_att.type_mask & AttitudeTarget::IGNORE_THRUST;
-    const bool attitude_ignore    = cmd_att.type_mask & AttitudeTarget::IGNORE_ATTITUDE;
+    const bool roll_rate_ignore   = cmd_att.type_mask & IGNORE_ROLL_RATE;
+    const bool pitch_rate_ignore  = cmd_att.type_mask & IGNORE_PITCH_RATE;
+    const bool yaw_rate_ignore    = cmd_att.type_mask & IGNORE_YAW_RATE;
+    const bool throttle_ignore    = cmd_att.type_mask & IGNORE_THRUST;
+    const bool attitude_ignore    = cmd_att.type_mask & IGNORE_ATTITUDE;
 
     // thrust field should not be ignored
     if (throttle_ignore) {
