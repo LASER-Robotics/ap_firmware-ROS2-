@@ -3,9 +3,9 @@
 #include <AP_GPS/AP_GPS_config.h>
 #include <AP_HAL/AP_HAL_Boards.h>
 #include <AP_Networking/AP_Networking_Config.h>
+#include <AP_RSSI/AP_RSSI_config.h>
 #include <AP_VisualOdom/AP_VisualOdom_config.h>
 #include <RC_Channel/RC_Channel_config.h>
-#include <AP_RSSI/AP_RSSI_config.h>
 
 #ifndef AP_DDS_ENABLED
 #define AP_DDS_ENABLED 1
@@ -31,7 +31,7 @@
 #endif
 
 #ifndef AP_DDS_DELAY_IMU_TOPIC_MS
-#define AP_DDS_DELAY_IMU_TOPIC_MS 1
+#define AP_DDS_DELAY_IMU_TOPIC_MS 10
 #endif
 
 #ifndef AP_DDS_TIME_PUB_ENABLED
@@ -39,7 +39,7 @@
 #endif
 
 #ifndef AP_DDS_DELAY_TIME_TOPIC_MS
-#define AP_DDS_DELAY_TIME_TOPIC_MS 10
+#define AP_DDS_DELAY_TIME_TOPIC_MS 100
 #endif
 
 #ifndef AP_DDS_NAVSATFIX_PUB_ENABLED
@@ -71,7 +71,7 @@
 #endif
 
 #ifndef AP_DDS_DELAY_LOCAL_POSE_TOPIC_MS
-#define AP_DDS_DELAY_LOCAL_POSE_TOPIC_MS 7
+#define AP_DDS_DELAY_LOCAL_POSE_TOPIC_MS 10
 #endif
 
 #ifndef AP_DDS_LOCAL_VEL_PUB_ENABLED
@@ -79,11 +79,11 @@
 #endif
 
 #ifndef AP_DDS_DELAY_LOCAL_VELOCITY_TOPIC_MS
-#define AP_DDS_DELAY_LOCAL_VELOCITY_TOPIC_MS 7
+#define AP_DDS_DELAY_LOCAL_VELOCITY_TOPIC_MS 10
 #endif
 
 #ifndef AP_DDS_AIRSPEED_PUB_ENABLED
-#define AP_DDS_AIRSPEED_PUB_ENABLED 1
+#define AP_DDS_AIRSPEED_PUB_ENABLED 0
 #endif
 
 #ifndef AP_DDS_DELAY_AIRSPEED_TOPIC_MS
@@ -115,7 +115,7 @@
 #endif
 
 #ifndef AP_DDS_DELAY_CLOCK_TOPIC_MS
-#define AP_DDS_DELAY_CLOCK_TOPIC_MS 10
+#define AP_DDS_DELAY_CLOCK_TOPIC_MS 100
 #endif
 
 #ifndef AP_DDS_GOAL_PUB_ENABLED
@@ -123,14 +123,14 @@
 #endif
 
 #ifndef AP_DDS_DELAY_GOAL_TOPIC_MS
-#define AP_DDS_DELAY_GOAL_TOPIC_MS  200
+#define AP_DDS_DELAY_GOAL_TOPIC_MS 200
 #endif
 #ifndef AP_DDS_STATUS_PUB_ENABLED
 #define AP_DDS_STATUS_PUB_ENABLED 1
 #endif
 
 #ifndef AP_DDS_JOY_SUB_ENABLED
-#define AP_DDS_JOY_SUB_ENABLED 1
+#define AP_DDS_JOY_SUB_ENABLED 0
 #endif
 
 #ifndef AP_DDS_ATT_CTRL_ENABLED
